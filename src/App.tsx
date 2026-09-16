@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { BookOpen, Check, ChevronRight, ExternalLink, Languages, MapPin, Moon, RotateCcw, ShieldCheck } from 'lucide-react'
+import { ArrowUp, BookOpen, Check, ChevronRight, ExternalLink, Languages, MapPin, Moon, RotateCcw, ShieldCheck } from 'lucide-react'
 import Papa from 'papaparse'
 import { QRCodeSVG } from 'qrcode.react'
 import './App.css'
@@ -19,7 +19,7 @@ const copy = {
     calcTitle: '慢跑能量估算', calcText: '輸入你的體重、時間與速度。結果只在瀏覽器計算，不會被儲存。', duration: '運動時間', minutes: '分鐘', result: '估算消耗', distance: '約完成', reset: '重設', formula: '計算方式',
     shelfTitle: '圖書館資源', openBook: '查看資源', scan: '掃描開啟', libraryLoading: '正在載入圖書館資源…', libraryEmpty: '目前未有可顯示的圖書館資源。', libraryError: '暫時無法載入圖書館資源，請稍後再試。', electronicBook: '電子書', physicalBook: '實體書', coverAlt: '封面',
     source: '資料來源', disclaimer: '健康提示', disclaimerText: '所有能量、時間及距離均為教育用途估算，會因個人狀況、路線和天氣而異。運動並非用來抵銷食物；享受適量飲食，也享受活動身體。',
-    about: '約', laps: '次', km: '公里', min: '分鐘', perRoute: '沿這段海濱', footer: '學院圖書館 · 示範版本',
+    about: '約', laps: '次', km: '公里', min: '分鐘', perRoute: '沿這段海濱', footer: '學院圖書館', backToTop: '回到最上',
   },
   en: {
     brand: 'Moonlit Miles', tagline: '月下同行', nav: ['Mooncake journey', 'Waterfront map', 'Night safety', 'Energy calculator', 'Library resources', 'E-card'],
@@ -32,7 +32,7 @@ const copy = {
     calcTitle: 'Jogging energy estimator', calcText: 'Enter your weight, time and speed. Everything is calculated locally and never stored.', duration: 'Duration', minutes: 'minutes', result: 'Estimated energy', distance: 'Approx. distance', reset: 'Reset', formula: 'How it works',
     shelfTitle: 'Library resources', openBook: 'View resource', scan: 'Scan to open', libraryLoading: 'Loading library resources…', libraryEmpty: 'There are no library resources to display yet.', libraryError: 'Library resources are temporarily unavailable. Please try again later.', electronicBook: 'eBook', physicalBook: 'Physical book', coverAlt: 'cover',
     source: 'Sources', disclaimer: 'Health note', disclaimerText: 'Energy, time and distance figures are educational estimates and vary by person, route and weather. Exercise is not a way to cancel food; enjoy food in moderation and enjoy moving too.',
-    about: 'about', laps: 'times', km: 'km', min: 'min', perRoute: 'along this waterfront', footer: 'Academy Libraries · Demonstration',
+    about: 'about', laps: 'times', km: 'km', min: 'min', perRoute: 'along this waterfront', footer: 'Academy Libraries', backToTop: 'Back to top',
   },
 }
 
@@ -158,6 +158,7 @@ function App() {
   const [checks, setChecks] = useState<string[]>([])
   const [books, setBooks] = useState<LibraryBook[]>([])
   const [libraryStatus, setLibraryStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [showBackToTop, setShowBackToTop] = useState(false)
   const t = copy[language]
   const mooncake = mooncakes.find((item) => item.id === mooncakeId) ?? mooncakes[0]
   const mooncakeEnergy = mooncake.kcal * portion
@@ -171,6 +172,13 @@ function App() {
     document.documentElement.lang = language === 'zh' ? 'zh-HK' : 'en'
     localStorage.setItem('moonlit-language', language)
   }, [language])
+
+  useEffect(() => {
+    const updateBackToTop = () => setShowBackToTop(window.scrollY > 500)
+    updateBackToTop()
+    window.addEventListener('scroll', updateBackToTop, { passive: true })
+    return () => window.removeEventListener('scroll', updateBackToTop)
+  }, [])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -253,6 +261,7 @@ function App() {
         <section className="source-band"><div><ShieldCheck /><span><strong>{t.disclaimer}</strong>{t.disclaimerText}</span></div><a href="https://www.chp.gov.hk/en/static/90004.html" target="_blank" rel="noreferrer">{t.source}<ExternalLink size={15} /></a></section>
       </main>
       <footer><span>{t.footer}</span><span>© 2026 · Google Maps</span></footer>
+      <button className={`back-to-top${showBackToTop ? ' visible' : ''}`} type="button" aria-label={t.backToTop} title={t.backToTop} onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })}><ArrowUp aria-hidden="true" /></button>
     </div>
   )
 }

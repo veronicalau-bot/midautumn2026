@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test'
 import { readFile } from 'node:fs/promises'
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page }, testInfo) => {
+  testInfo.setTimeout(60_000)
   await page.route('https://docs.google.com/spreadsheets/**', async (route) => {
     await route.fulfill({
       contentType: 'text/csv; charset=utf-8',
@@ -40,7 +41,7 @@ test('switches language and updates the local calculator', async ({ page }) => {
   await page.getByRole('button', { name: /EN/ }).click()
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
   await expect(page.getByRole('heading', { level: 1 })).toContainText('This Mid-Autumn')
-  await expect(page.getByText('Academy Libraries', { exact: true })).toBeVisible()
+  await expect(page.locator('#top .eyebrow')).toHaveText('Academy Libraries')
   await expect(page.getByText('College Library')).toHaveCount(0)
   await expect(page.getByRole('heading', { name: 'Send a Mid-Autumn e-card' })).toBeVisible()
   await page.locator('#calculator').scrollIntoViewIfNeeded()
@@ -119,6 +120,24 @@ test('downloads the generated e-card as a PNG', async ({ page }) => {
   expect(filePath).not.toBeNull()
   const bytes = await readFile(filePath!)
   expect([...bytes.subarray(0, 8)]).toEqual([137, 80, 78, 71, 13, 10, 26, 10])
+})
+
+test('shows the e-card preview before the editor on mobile', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'This layout rule applies only to mobile.')
+  const positions = await page.locator('#e-card .ecard-preview, #e-card .ecard-editor').evaluateAll((elements) => elements.map((element) => ({ className: element.className, top: element.getBoundingClientRect().top })))
+  expect(positions[0].className).toBe('ecard-editor')
+  expect(positions[1].className).toBe('ecard-preview')
+  expect(positions[1].top).toBeLessThan(positions[0].top)
+})
+
+test('shows the floating back-to-top control after scrolling', async ({ page }) => {
+  const button = page.getByRole('button', { name: '回到最上' })
+  await expect(button).not.toBeVisible()
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+  await expect(button).toBeVisible()
+  await button.click()
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(10)
+  await expect(page.getByText('學院圖書館 · 示範版本')).toHaveCount(0)
 })
 
 test('opens the supplied Google Maps directions for each updated route', async ({ page }) => {

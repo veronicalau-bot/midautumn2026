@@ -185,6 +185,10 @@ input[type='range'] { width: 100%; margin-top: 15px; accent-color: var(--red); }
 .source-band strong { display: block; font-size: 13px; }
 .source-band a { display: flex; align-items: center; gap: 6px; white-space: nowrap; font-size: 12px; font-weight: 700; }
 footer { padding: 25px clamp(20px, 7vw, 110px); display: flex; justify-content: space-between; color: #a4b4ae; background: var(--night-deep); font-size: 10px; }
+.back-to-top { width: 50px; height: 50px; padding: 0; position: fixed; right: clamp(18px, 3vw, 38px); bottom: clamp(18px, 3vw, 38px); z-index: 1100; display: grid; place-items: center; color: var(--night-deep); background: var(--moon); border: 2px solid var(--night-deep); border-radius: 50%; box-shadow: 0 8px 24px rgba(4,18,22,.28); opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity .2s ease, transform .2s ease, visibility .2s; }
+.back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.back-to-top:hover { color: white; background: var(--red); }
+.back-to-top svg { width: 24px; height: 24px; stroke-width: 2.4; }
 
 @keyframes rise { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -230,8 +234,10 @@ footer { padding: 25px clamp(20px, 7vw, 110px); display: flex; justify-content: 
   .book-card { min-height: 350px; grid-template-columns: 42% 58%; }
   .book-cover { min-height: 350px; }
   .ecard-editor { padding: 25px 20px; }
+  .ecard-preview { order: -1; }
   .ecard-preview canvas { box-shadow: 10px 10px 0 rgba(4,18,22,.32); }
   .source-band, footer { align-items: flex-start; flex-direction: column; }
+  .back-to-top { width: 46px; height: 46px; right: 16px; bottom: 16px; }
 }
 
 @media (max-width: 390px) {
