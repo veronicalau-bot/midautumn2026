@@ -44,6 +44,18 @@ test('switches language and updates the local calculator', async ({ page }) => {
   await expect(page.locator('#top .eyebrow')).toHaveText('Academy Libraries')
   await expect(page.getByText('College Library')).toHaveCount(0)
   await expect(page.getByRole('heading', { name: 'Send a Mid-Autumn e-card' })).toBeVisible()
+  const heroLayout = await page.locator('.hero-section').evaluate((hero) => {
+    const actions = hero.querySelector('.hero-actions')
+    const title = hero.querySelector('.hero-title-en')
+    if (!actions || !title) return null
+    return {
+      actionsBottom: actions.getBoundingClientRect().bottom,
+      heroBottom: hero.getBoundingClientRect().bottom,
+      titleFontSize: Number.parseFloat(getComputedStyle(title).fontSize),
+    }
+  })
+  expect(heroLayout).not.toBeNull()
+  expect(heroLayout!.actionsBottom).toBeLessThanOrEqual(heroLayout!.heroBottom)
   await page.locator('#calculator').scrollIntoViewIfNeeded()
   const inputs = page.locator('.calculator-inputs input')
   await inputs.nth(0).fill('70')
@@ -69,7 +81,13 @@ test('renders and updates the e-card canvas locally', async ({ page }) => {
   const canvas = section.locator('canvas')
 
   await expect(section.getByRole('heading', { name: '送上一張中秋電子賀卡' })).toBeVisible()
-  await expect.poll(() => canvas.evaluate((element) => ({ width: element.width, height: element.height }))).toMatchObject({ width: 1490 })
+  const sourceDimensions = await page.evaluate(() => new Promise<{ width: number, height: number }>((resolve, reject) => {
+    const image = new Image()
+    image.onload = () => resolve({ width: image.naturalWidth, height: image.naturalHeight })
+    image.onerror = () => reject(new Error('Unable to load e-card artwork'))
+    image.src = '/05_15_53.png'
+  }))
+  await expect.poll(() => canvas.evaluate((element) => ({ width: element.width, height: element.height }))).toMatchObject({ width: sourceDimensions.width })
   const initialCanvas = await canvas.evaluate((element) => {
     const context = element.getContext('2d')
     if (!context) return { height: 0, checksum: 0 }
@@ -78,7 +96,7 @@ test('renders and updates the e-card canvas locally', async ({ page }) => {
     for (let index = 0; index < pixels.length; index += 4093) checksum = (checksum + pixels[index]) % 1000000007
     return { height: element.height, checksum }
   })
-  expect(initialCanvas.height).toBeGreaterThan(1056)
+  expect(initialCanvas.height).toBeGreaterThan(sourceDimensions.height)
   expect(initialCanvas.checksum).toBeGreaterThan(0)
   const logoPixels = await canvas.evaluate((element) => {
     const context = element.getContext('2d')

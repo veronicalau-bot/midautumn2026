@@ -208,7 +208,7 @@ function App() {
 
       <main id="top">
         <section className="hero-section">
-          <div className="hero-content"><p className="eyebrow">{t.eyebrow}</p><h1>{t.heroTitle}</h1><p className="hero-copy">{t.heroText}</p><div className="hero-actions"><a className="button primary" href="#journey">{t.start}<ChevronRight size={18} /></a><a className="button ghost" href="#routes">{t.explore}</a><a className="button ghost" href="#library">{t.libraryCta}</a><a className="button ghost" href="#e-card">{t.ecardCta}</a></div></div>
+          <div className="hero-content"><p className="eyebrow">{t.eyebrow}</p><h1 className={language === 'en' ? 'hero-title-en' : undefined}>{t.heroTitle}</h1><p className="hero-copy">{t.heroText}</p><div className={`hero-actions${language === 'en' ? ' hero-actions-en' : ''}`}><a className="button primary" href="#journey">{t.start}<ChevronRight size={18} /></a><a className="button ghost" href="#routes">{t.explore}</a><a className="button ghost" href="#library">{t.libraryCta}</a><a className="button ghost" href="#e-card">{t.ecardCta}</a></div></div>
           <div className="moon-stage" aria-hidden="true"><div className="moon-disc"><span>中秋</span><small>2026</small></div><div className="skyline" /></div>
         </section>
 

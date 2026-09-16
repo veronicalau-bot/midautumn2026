@@ -152,9 +152,9 @@ export function ECardSection({ language }: ECardSectionProps) {
     context.textAlign = 'center'
     context.textBaseline = 'middle'
     context.fillStyle = '#202b28'
-    context.font = `600 58px "Noto Serif HK", serif`
+    context.font = `600 48px "Noto Serif HK", serif`
     const lines = wrapCanvasText(context, greeting || t.presetsList[0], maxTextWidth).slice(0, 4)
-    const lineHeight = 82
+    const lineHeight = 68
     const greetingCenter = image.naturalHeight + panelHeight * 0.42
     const firstLineY = greetingCenter - ((lines.length - 1) * lineHeight) / 2
     lines.forEach((line, index) => context.fillText(line, centerX, firstLineY + index * lineHeight))
