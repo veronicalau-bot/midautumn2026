@@ -24,7 +24,7 @@
 .hero-section::after { content: ''; position: absolute; inset: 0; z-index: -1; background: repeating-linear-gradient(120deg, transparent 0 36px, rgba(255,255,255,.025) 37px 38px); }
 .hero-content { max-width: 660px; position: relative; z-index: 2; }
 .eyebrow, .section-number { margin: 0 0 22px; font-size: 12px; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: 0; }
-.hero-section .eyebrow { color: var(--moon); }
+.hero-section .eyebrow { color: var(--moon); font-size: 18px; }
 h1, h2, h3, p { margin-top: 0; }
 h1 { margin-bottom: 26px; max-width: 720px; font: 650 clamp(48px, 6vw, 84px)/1.12 'Noto Serif HK', 'Fraunces', serif; letter-spacing: 0; }
 .hero-title-en { max-width: 620px; font-size: clamp(44px, 4.5vw, 66px); line-height: 1.06; }
@@ -208,6 +208,7 @@ footer { padding: 25px clamp(20px, 7vw, 110px); display: flex; justify-content: 
   .site-header { height: 66px; padding-inline: 18px; }
   .hero-section { min-height: 710px; max-height: none; padding: 64px 20px 32px; grid-template-columns: 1fr; align-content: start; background-position: 58% center; }
   .hero-section::before { content: ''; position: absolute; inset: 0; z-index: -1; background: rgba(8,26,33,.28); }
+  .hero-section .eyebrow { font-size: 16px; }
   h1 { font-size: 43px; }
   .hero-title-en { font-size: 43px; line-height: 1.12; }
   .hero-copy { font-size: 15px; }

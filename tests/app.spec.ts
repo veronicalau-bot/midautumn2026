@@ -13,9 +13,10 @@ test.beforeEach(async ({ page }, testInfo) => {
 })
 
 test('renders all core experiences and the waterfront map', async ({ page }, testInfo) => {
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('這個中秋，同行於香港海濱的月下')
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('於香港海濱的月光下同行')
   await expect(page.getByRole('heading', { name: '夜跑安全注意' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '圖書館資源' })).toBeVisible()
+  await expect(page.getByText('演藝學院圖書館', { exact: true })).toBeVisible()
   await expect(page.getByText('中秋健康企劃')).toHaveCount(0)
   await expect(page.getByText('如有嚴重不適或緊急情況，請致電 999。')).toHaveCount(0)
   await expect(page.locator('.hero-actions').getByRole('link', { name: '查看海濱' })).toHaveAttribute('href', '#routes')
@@ -40,7 +41,7 @@ test('renders all core experiences and the waterfront map', async ({ page }, tes
 test('switches language and updates the local calculator', async ({ page }) => {
   await page.getByRole('button', { name: /EN/ }).click()
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('This Mid-Autumn')
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Walk together under Hong Kong’s waterfront moonlight')
   await expect(page.locator('#top .eyebrow')).toHaveText('Academy Libraries')
   await expect(page.getByText('College Library')).toHaveCount(0)
   await expect(page.getByRole('heading', { name: 'Send a Mid-Autumn e-card' })).toBeVisible()
