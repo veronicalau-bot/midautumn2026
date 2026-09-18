@@ -78,6 +78,13 @@ test('loads library records from the published CSV fields', async ({ page }) => 
   await expect(library.locator('.book-card').filter({ hasText: '香港散步學' })).toContainText('實體書')
 })
 
+test('uses location-neutral third e-card greetings in both languages', async ({ page }) => {
+  const ecard = page.locator('#e-card')
+  await expect(ecard.getByRole('button', { name: '共賞月色，共享團圓時光。' })).toBeVisible()
+  await page.getByRole('button', { name: 'EN' }).click()
+  await expect(ecard.getByRole('button', { name: 'Wishing you a joyful Mid-Autumn under the moonlight.' })).toBeVisible()
+})
+
 test('opens a direct e-card URL at the e-card section after library loading', async ({ page }) => {
   await page.goto('/#e-card')
   await expect(page.locator('#library .book-card')).toHaveCount(2)

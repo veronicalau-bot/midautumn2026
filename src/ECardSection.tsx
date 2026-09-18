@@ -29,7 +29,7 @@ const eCardCopy = {
     presetsList: [
       '月圓人團圓，祝你中秋快樂、身心安康。',
       '願這輪明月，照亮每一段同行的路。',
-      '共賞香港月色，共享團圓時光。',
+      '共賞月色，共享團圓時光。',
     ],
   },
   en: {
@@ -55,7 +55,7 @@ const eCardCopy = {
     presetsList: [
       'May the full moon bring you together in health and happiness.',
       'May this moonlight brighten every journey we share.',
-      'Wishing you a joyful Mid-Autumn under Hong Kong’s moonlight.',
+      'Wishing you a joyful Mid-Autumn under the moonlight.',
     ],
   },
 } as const
