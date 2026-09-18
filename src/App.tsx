@@ -9,8 +9,8 @@ type Language = 'zh' | 'en'
 
 const copy = {
   zh: {
-    brand: '跑走月餅', tagline: 'Running Off the Mooncake', nav: ['月餅旅程', '海濱地圖', '夜跑安全', '能量計算', '圖書館資源', '電子賀卡'],
-    eyebrow: '學院圖書館', heroTitle: '跑走月餅 Running Off the Mooncake',
+    brand: '跑走月餅', tagline: 'Run the Mooncake Away', nav: ['月餅旅程', '海濱地圖', '夜跑安全', '能量計算', '圖書館資源', '電子賀卡'],
+    eyebrow: '學院圖書館', heroTitle: '跑走月餅 Run the Mooncake Away',
     heroText: '一同於海濱慢跑，感受中秋晚風', start: '開始探索', explore: '查看海濱', libraryCta: '圖書館資源', ecardCta: '電子賀卡',
     journeyTitle: '吃一個月餅，要慢跑海濱多少次？', journeyText: '選擇月餅和食用份量，估算需要完成各條海濱路線多少次，才會消耗相若的能量。次數按體重和路線距離估算；速度只會改變每次所需時間。',
     mooncake: '月餅款式', portion: '分享份量', weight: '你的體重', speed: '慢跑速度', whole: '一個', half: '半個', quarter: '四分一個',
@@ -22,8 +22,8 @@ const copy = {
     about: '約', laps: '次', km: '公里', min: '分鐘', perRoute: '沿這段海濱', footer: '演藝學院圖書館', backToTop: '回到最上',
   },
   en: {
-    brand: 'Running Off the Mooncake', tagline: '跑走月餅', nav: ['Mooncake journey', 'Waterfront map', 'Night safety', 'Energy calculator', 'Library resources', 'E-card'],
-    eyebrow: 'Academy Libraries', heroTitle: '跑走月餅 Running Off the Mooncake',
+    brand: 'Run the Mooncake Away', tagline: '跑走月餅', nav: ['Mooncake journey', 'Waterfront map', 'Night safety', 'Energy calculator', 'Library resources', 'E-card'],
+    eyebrow: 'Academy Libraries', heroTitle: '跑走月餅 Run the Mooncake Away',
     heroText: 'Jog the waterfront together and feel the Mid-Autumn evening breeze.', start: 'Start the journey', explore: 'Explore waterfronts', libraryCta: 'Library resources', ecardCta: 'E-card',
     journeyTitle: 'How many waterfront runs equal one mooncake?', journeyText: 'Choose a mooncake and portion to estimate how many times you would need to complete each waterfront route to use a similar amount of energy. Repetitions are based on weight and distance; speed only changes the time per route.',
     mooncake: 'Mooncake', portion: 'Portion', weight: 'Your weight', speed: 'Jogging speed', whole: 'Whole', half: 'Half', quarter: 'Quarter',

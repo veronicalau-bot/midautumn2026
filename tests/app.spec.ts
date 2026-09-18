@@ -13,8 +13,8 @@ test.beforeEach(async ({ page }, testInfo) => {
 })
 
 test('renders all core experiences and the waterfront map', async ({ page }, testInfo) => {
-  await expect(page).toHaveTitle('跑走月餅 Running Off the Mooncake')
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('跑走月餅 Running Off the Mooncake')
+  await expect(page).toHaveTitle('跑走月餅 Run the Mooncake Away')
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('跑走月餅 Run the Mooncake Away')
   await expect(page.getByRole('heading', { name: '夜跑安全注意' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '圖書館資源' })).toBeVisible()
   await expect(page.getByText('演藝學院圖書館', { exact: true })).toBeVisible()
@@ -42,7 +42,7 @@ test('renders all core experiences and the waterfront map', async ({ page }, tes
 test('switches language and updates the local calculator', async ({ page }) => {
   await page.getByRole('button', { name: /EN/ }).click()
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('跑走月餅 Running Off the Mooncake')
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('跑走月餅 Run the Mooncake Away')
   await expect(page.locator('#top .eyebrow')).toHaveText('Academy Libraries')
   await expect(page.getByText('College Library')).toHaveCount(0)
   await expect(page.getByRole('heading', { name: 'Send a Mid-Autumn e-card' })).toBeVisible()
