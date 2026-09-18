@@ -77,6 +77,12 @@ test('loads library records from the published CSV fields', async ({ page }) => 
   await expect(library.locator('.book-card').filter({ hasText: '香港散步學' })).toContainText('實體書')
 })
 
+test('opens a direct e-card URL at the e-card section after library loading', async ({ page }) => {
+  await page.goto('/#e-card')
+  await expect(page.locator('#library .book-card')).toHaveCount(2)
+  await expect.poll(() => page.locator('#e-card').evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(100)
+})
+
 test('renders and updates the e-card canvas locally', async ({ page }) => {
   const section = page.locator('#e-card')
   const canvas = section.locator('canvas')
